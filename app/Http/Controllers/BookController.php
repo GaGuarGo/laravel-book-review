@@ -54,13 +54,13 @@ class BookController extends Controller
     public function show(Book $book)
     {
 
+        $cacheKey =  d;
+
+        $book = cache()->remember($cacheKey, 3600, fn() => $book->load(['reviews' => fn($query) => $query->latest()]));
+
         //lazy loading = false, carregando a relação entre models logo quando o
         //endpoint é chamado
-        return view('books.show', ['book' => $book->load(['reviews' => fn($query) => $query->latest()
-                ]
-            )
-            ]
-        );
+        return view('books.show', ['book' => $book]);
     }
 
     /**
