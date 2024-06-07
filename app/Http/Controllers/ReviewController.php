@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
+
+    public function __construct()
+    {
+        //aplicando limite de requisições por minuto/hora/dia
+        $this->middleware('throttle:reviews');
+    }
+
     /**
      * Display a listing of the resource.
      */
